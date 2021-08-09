@@ -150,4 +150,12 @@ public class Produto {
 		return this.opinioes.stream().map(funcaoMapeadora).collect(Collectors.toSet());
 	}
 	
+	public boolean abateEstoque(Integer qtdCompra) {
+		if(qtdCompra <= this.qtd) {
+			this.qtd-=qtdCompra;
+			return true;
+		}
+		return false;
+	}
+	
 }

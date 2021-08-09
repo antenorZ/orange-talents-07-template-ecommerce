@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import br.com.zup.mercadolivre.model.Compra;
 import br.com.zup.mercadolivre.model.Pergunta;
 
 @Service
@@ -17,5 +18,9 @@ public class Email {
 	
 	public void novaPergunta(@NotNull @Valid Pergunta pergunta) {
 		mailer.send("Mensagem", "Titulo", pergunta.getUsrAutorPergunta().getLogin(), pergunta.getProdutoSelecionado().getUsrDono());
+	}
+	
+	public void novaCompra(Compra compra) {
+		mailer.send("Usuario quer comprar o produto", "Nova Compra", compra.getUsrComprador(), compra.getProdutoComprado().getUsrDono());
 	}
 }
