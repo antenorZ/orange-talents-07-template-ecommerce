@@ -23,4 +23,12 @@ public class Email {
 	public void novaCompra(Compra compra) {
 		mailer.send("Nova compra", "Um novo usuario deseja comprar o seu produto", "Comprador: " + compra.getUsrComprador().getLogin(), compra.getProdutoComprado().getUsrDono());
 	}
+	
+	public void novaCompraProcessadaComSucesso(Compra compra) {
+		mailer.send("Compra concluida com sucesso", "Sua compra já está a caminho", "Produto: " + compra.getProdutoComprado().getNome(), compra.getUsrComprador());
+	}
+	
+	public void erroNaCompra(Compra compra) {
+		mailer.send("Erro na compra", "Tente novamente no link: ", compra.getUsrComprador().getLogin(), compra.getUsrComprador());
+	}
 }

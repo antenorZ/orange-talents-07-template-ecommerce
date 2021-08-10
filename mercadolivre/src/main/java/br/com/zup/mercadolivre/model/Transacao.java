@@ -60,6 +60,25 @@ public class Transacao {
 				&& Objects.equals(idTransacaoGateway, other.idTransacaoGateway)
 				&& Objects.equals(instanteCriacao, other.instanteCriacao) && status == other.status;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public StatusTransacao getStatus() {
+		return status;
+	}
+
+	public String getIdTransacaoGateway() {
+		return idTransacaoGateway;
+	}
+
+	public LocalDateTime getInstanteCriacao() {
+		return instanteCriacao;
+	}
+
+	public Compra getCompraProcessada() {
+		return compraProcessada;
+	}
 	
 }

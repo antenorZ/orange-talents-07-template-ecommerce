@@ -69,6 +69,10 @@ public class Compra {
 		return qtdCompra;
 	}
 	
+	public Set<Transacao> getTransacoes() {
+		return transacoes;
+	}
+
 	public String urlRedirecionamento(
 			UriComponentsBuilder uriComponentsBuilder) {
 		return this.gateway.criaUrlRetorno(this, uriComponentsBuilder);
@@ -77,10 +81,18 @@ public class Compra {
 	public void adicionaTransacao(@Valid RetornoGatewayPagamento retornoGatewayPagamento) {
 		Transacao novaTransacao = retornoGatewayPagamento.toTransacao(this);
 		Assert.isTrue(!this.transacoes.contains(novaTransacao), "Já existe transacao igual");
-		Set<Transacao> transacoesConcluidasSucesso = this.transacoes.stream().filter(Transacao :: concluidaComSucesso).collect(Collectors.toSet());
-		Assert.isTrue(transacoesConcluidasSucesso.isEmpty(), "Essa compra já foi concluída com sucesso");
 		this.transacoes.add(retornoGatewayPagamento.toTransacao(this));
-		
+	}
+	
+	private Set<Transacao> transacoesConcluidasComSucesso(){
+		Set<Transacao> transacoesConcluidasComSucesso = this.transacoes.stream().
+				filter(Transacao :: concluidaComSucesso).collect(Collectors.toSet());
+		Assert.isTrue(transacoesConcluidasComSucesso.size() <= 1, "Falha na validacao");
+		return transacoesConcluidasComSucesso;
+	}
+	
+	public boolean ProcessadaComSucesso() {
+		return !transacoesConcluidasComSucesso().isEmpty();
 	}
 
 	
