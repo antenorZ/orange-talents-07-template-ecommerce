@@ -21,6 +21,6 @@ public class Email {
 	}
 	
 	public void novaCompra(Compra compra) {
-		mailer.send("Usuario quer comprar o produto", "Nova Compra", compra.getUsrComprador(), compra.getProdutoComprado().getUsrDono());
+		mailer.send("Nova compra", "Um novo usuario deseja comprar o seu produto", "Comprador: " + compra.getUsrComprador().getLogin(), compra.getProdutoComprado().getUsrDono());
 	}
 }

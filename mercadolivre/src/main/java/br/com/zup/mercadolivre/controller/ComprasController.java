@@ -43,7 +43,7 @@ public class ComprasController {
 	
 	
 	@PostMapping
-	public ResponseEntity<?> criar(@RequestBody @Valid CompraForm compraForm, @RequestHeader("Authorization") String token, UriComponentsBuilder uriBuilder){
+	public String criar(@RequestBody @Valid CompraForm compraForm, @RequestHeader("Authorization") String token, UriComponentsBuilder uriBuilder){
 		Long idUsrComprador = tokenService.getIdUsuario(token.substring(7,token.length()));
 		Usuario usrComprador = usuarioRepository.getById(idUsrComprador);
 		Produto produtoSelecionado = produtoRepository.getById(compraForm.getIdProdutoSelecionado());
@@ -56,19 +56,10 @@ public class ComprasController {
 			Compra compra = compraForm.toModel(produtoSelecionado, usrComprador, gatewaySelecionado);
 			compraRepository.save(compra);
 			email.novaCompra(compra);
-			if(gatewaySelecionado.equals(GatewayPagamento.pagseguro)) {
-				String urlPagSeguro = uriBuilder.path("/retorno-pagseguro/{id}").buildAndExpand(compra.getId()).toString();
-				String urlRedirectPagSeguro = "pagseguro.com/" + compra.getId() + "?redirectUrl=" + urlPagSeguro;
-				return ResponseEntity.status(HttpStatus.OK).build();
-			}
-			else {
-				String urlPayPal = uriBuilder.path("/retorno-paypal/{id}").buildAndExpand(compra.getId()).toString();
-				String urlRedirectPayPal = "paypal.com/" + compra.getId() + "?redirectUrl=" + urlPayPal;
-				return ResponseEntity.status(HttpStatus.OK).build();
-			}
+			return compra.urlRedirecionamento(uriBuilder);
 		}
 		else {
-			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build().toString();
 		}
 	}
 }

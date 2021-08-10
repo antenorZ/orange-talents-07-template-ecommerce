@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -157,5 +158,30 @@ public class Produto {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(caracteristicas, categoria, descricao, id, imagens, momentoCadastro, nome, opinioes,
+				perguntas, qtd, usrDono, valor);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		return Objects.equals(caracteristicas, other.caracteristicas) && Objects.equals(categoria, other.categoria)
+				&& Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
+				&& Objects.equals(imagens, other.imagens) && Objects.equals(momentoCadastro, other.momentoCadastro)
+				&& Objects.equals(nome, other.nome) && Objects.equals(opinioes, other.opinioes)
+				&& Objects.equals(perguntas, other.perguntas) && Objects.equals(qtd, other.qtd)
+				&& Objects.equals(usrDono, other.usrDono) && Objects.equals(valor, other.valor);
+	}
+	
+	
 	
 }

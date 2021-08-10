@@ -1,6 +1,7 @@
 package br.com.zup.mercadolivre.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.persistence.Entity;
@@ -48,7 +49,22 @@ public class Categoria{
 		return nome;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoriaMae, id, nome);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Categoria other = (Categoria) obj;
+		return Objects.equals(categoriaMae, other.categoriaMae) && Objects.equals(id, other.id)
+				&& Objects.equals(nome, other.nome);
+	}
 	
 }
