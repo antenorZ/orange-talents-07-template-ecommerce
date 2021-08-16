@@ -66,11 +66,11 @@ public class ComprasPt2Controller {
 			notaFiscal.geraNota(compraProcessada);
 			ranking.addNoRanking(compraProcessada);
 			email.novaCompraProcessadaComSucesso(compraProcessada);
-			return "pagamento recebido: " + retornoGatewayPagamento.toString();
+			return  compraProcessada.toString();
 		}
 		else {
 			email.erroNaCompra(compraProcessada);
-			return "erro no pagamento: " + retornoGatewayPagamento.toString();
+			return  compraProcessada.toString();
 		}
 		
 	}
